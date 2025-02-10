@@ -1,8 +1,9 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
-import { User } from '@prisma/client';
+import { Posts, User } from '@prisma/client';
 import { Prisma } from 'src/common/prisma/prisma.provider';
 import { CreateUserDTO } from 'src/user/dto/create-user.dto';
 import { UpdateUserDTO } from 'src/user/dto/update-user.dto';
+import { UnionType } from 'typescript';
 
 @Injectable()
 export class UserService {
@@ -59,9 +60,7 @@ export class UserService {
     if(!foundUser) throw new HttpException("Usuário nao encontrado", HttpStatus.NOT_FOUND);
 
     return this.prisma.user.delete({
-      where: {
-        cpf
-      },
+      where: { cpf },
     });
   }
 
